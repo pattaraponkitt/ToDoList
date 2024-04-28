@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const https = require('https');
-const fs = require('fs');
 const app = express();
 const todoRoutes = require('./routes/todos');
+const authRoutes = require('./routes/auth');
+const authMiddleware = require('./middleware/auth');
+const logger = require('./config/logger');
 
 // CORS Configuration
 app.use(cors({
@@ -13,21 +14,17 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
-app.use('/api/todos', todoRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/todos', authMiddleware, todoRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
+  logger.error(`Error: ${err.message}`);
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(err.statusCode || 500).json({ error: err.message });
 });
 
-// SSL/TLS Configuration
-const options = {
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert'),
-};
-
 const PORT = process.env.PORT || 5000;
-https.createServer(options, app).listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, () => {
+  logger.info(`Server is running on port ${PORT}`);
 });

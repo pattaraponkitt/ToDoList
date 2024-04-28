@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TodoItem from './TodoItem';
 import AddTodo from './AddTodo';
+import api from '../services/api';
+
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -10,15 +12,16 @@ const TodoList = () => {
     fetchTodos();
   }, []);
 
-  const fetchTodos = async () => {
-    const res = await axios.get('https://localhost:5000/api/todos');
+ const fetchTodos = async () => {
+    const res = await api.get('/todos');
     setTodos(res.data);
   };
-
+  
   const addTodo = async (title) => {
-    const res = await axios.post('https://localhost:5000/api/todos', { title });
+    const res = await api.post('/todos', { title });
     setTodos([...todos, { id: res.data.id, title, completed: false }]);
   };
+  
 
   const updateTodo = async (id, data) => {
     await axios.put(`https://localhost:5000/api/todos/${id}`, data);
