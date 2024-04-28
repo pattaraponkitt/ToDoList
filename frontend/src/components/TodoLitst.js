@@ -11,22 +11,22 @@ const TodoList = () => {
   }, []);
 
   const fetchTodos = async () => {
-    const res = await axios.get('http://localhost:5000/api/todos');
+    const res = await axios.get('https://localhost:5000/api/todos');
     setTodos(res.data);
   };
 
   const addTodo = async (title) => {
-    const res = await axios.post('http://localhost:5000/api/todos', { title });
+    const res = await axios.post('https://localhost:5000/api/todos', { title });
     setTodos([...todos, { id: res.data.id, title, completed: false }]);
   };
 
   const updateTodo = async (id, data) => {
-    await axios.put(`http://localhost:5000/api/todos/${id}`, data);
+    await axios.put(`https://localhost:5000/api/todos/${id}`, data);
     fetchTodos();
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`http://localhost:5000/api/todos/${id}`);
+    await axios.delete(`https://localhost:5000/api/todos/${id}`);
     fetchTodos();
   };
 

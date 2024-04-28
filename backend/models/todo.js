@@ -13,6 +13,12 @@ class Todo {
     return rows;
   }
 
+  // Get By Id
+  static async getById(id) {
+    const [rows] = await db.execute('SELECT * FROM todos WHERE id = ?', [id]);
+    return rows[0];
+  }
+
   // Update
   static async update(id, data) {
     const [result] = await db.execute('UPDATE todos SET title = ?, completed = ? WHERE id = ?', [data.title, data.completed, id]);
