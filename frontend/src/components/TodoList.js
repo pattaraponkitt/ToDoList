@@ -24,12 +24,12 @@ const TodoList = () => {
   
 
   const updateTodo = async (id, data) => {
-    await axios.put(`https://localhost:5000/api/todos/${id}`, data);
+    await api.put(`/todos/${id}`, data);
     fetchTodos();
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`https://localhost:5000/api/todos/${id}`);
+    await api.delete(`/todos/${id}`);
     fetchTodos();
   };
 

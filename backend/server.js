@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/todos', authMiddleware, todoRoutes);
+app.use('/api/todos', todoRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

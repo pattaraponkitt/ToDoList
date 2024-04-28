@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // Get Todo By Id
-router.get('/:id', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const todo = await Todo.getById(req.params.id);
     if (!todo) {
